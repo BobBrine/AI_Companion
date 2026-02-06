@@ -36,10 +36,10 @@ input_handler = InputHandler(PET_RADIUS)
     
 hwnd = pygame.display.get_wm_info()["window"]
 ex_style = win32gui.GetWindowLong(hwnd, win32con.GWL_EXSTYLE)
-ex_style |= win32con.WS_EX_LAYERED | win32con.WS_EX_TOPMOST
+ex_style |= win32con.WS_EX_LAYERED | win32con.WS_EX_TOPMOST | win32con.WS_EX_NOACTIVATE | win32con.WS_EX_TOOLWINDOW
 win32gui.SetWindowLong(hwnd, win32con.GWL_EXSTYLE, ex_style)
 win32gui.SetLayeredWindowAttributes(hwnd, win32api.RGB(*TRANSPARENT_COLOR), 0, win32con.LWA_COLORKEY)
-win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, 0, 0, W, H, win32con.SWP_SHOWWINDOW)
+win32gui.SetWindowPos(hwnd, win32con.HWND_TOPMOST, 0, 0, W, H, win32con.SWP_SHOWWINDOW | win32con.SWP_NOACTIVATE)
 
 clock = pygame.time.Clock()
 
