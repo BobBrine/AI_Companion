@@ -20,6 +20,9 @@ The main goal of this project is to learn about interactive system design, basic
 - Simple personalization and habit-learning experiments
 - Configurable avatar behavior and visual themes
 
+![AI](screenshot/Screenshot1.png)
+![AI Avatar](screenshot/Screenshot2.png)
+
 ## Project Structure
 - `main.py` — Application entry point and main loop
 - `pet_avatar.py` — Avatar rendering and behavior logic
