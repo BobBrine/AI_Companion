@@ -44,3 +44,6 @@ This project is still in active development. Future work will focus on improving
 3. Run the application:
    ```bash
    python main.py
+   
+## Notes
+This project is a personal learning initiative and serves as a sandbox for exploring AI-driven interactive systems.
