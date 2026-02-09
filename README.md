@@ -1,39 +1,46 @@
 # AI Companion
 
-An AI companion that can move around the screen, understand what is happening on-screen, and help with tasks inside a user-defined area. The goal is to create a desktop assistant that can observe a selected region, interact with it, and offer suggestions while learning user habits to speed up work and study.
+## Overview
+This project is an experimental AI companion designed to explore how autonomous software agents can visually interact with a desktop environment. The companion is intended to move around the screen, observe a user-defined region, and provide assistance based on on-screen context.
 
-## Vision
-- A small on-screen companion that can move, animate, and react.
-- On-screen understanding inside a selectable region ("see" only what the user allows).
-- Task assistance and suggestions based on context.
-- Habit learning to personalize workflow help over time.
-- Inspired by the idea of a J.A.R.V.I.S.-style assistant.
+The main goal of this project is to learn about interactive system design, basic AI decision-making, and real-time visual interaction, inspired by the concept of a J.A.R.V.I.S.-style desktop assistant.
 
-## Current Status
-Early prototype. Basic avatar and UI logic are present, with experimentation around local model usage.
+## Current Progress
+- Basic avatar rendering and movement behavior
+- Initial UI layout and helper components
+- Input handling structure for future interaction
+- Early experimentation with local AI models
+- Initial sprite and visual asset setup
 
 ## Planned Features
-- Screen region selection and bounding box controls.
-- Visual context capture and processing.
-- Lightweight local inference for on-screen understanding.
-- Interaction layer for task suggestions.
-- Personalization and habit learning.
-- Configurable behaviors, voice, and visual themes.
+- User-selected screen regions and bounding box controls
+- Visual context capture and basic on-screen analysis
+- Lightweight local inference for contextual understanding
+- Interaction layer for suggestions and assistance
+- Simple personalization and habit-learning experiments
+- Configurable avatar behavior and visual themes
 
 ## Project Structure
-- input_handler.py: Input and event handling.
-- main.py: App entry point.
-- pet_avatar.py: Avatar rendering and behavior.
-- ui.py: UI helpers and layout.
-- test_local_model.py: Local model experiments.
-- images/: Sprite assets.
+- `main.py` — Application entry point and main loop
+- `pet_avatar.py` — Avatar rendering and behavior logic
+- `input_handler.py` — Input and event handling
+- `ui.py` — UI components and layout helpers
+- `test_local_model.py` — Local model experimentation
+- `images/` — Sprite and visual assets
 
-## How To Run
+## What I Learned
+- Structuring a real-time Python application
+- Managing rendering loops and input handling
+- Designing modular components for future expansion
+- Experimenting with early-stage AI integration
+- Translating high-level ideas into incremental technical steps
+
+## Future Development
+This project is still in active development. Future work will focus on improving contextual understanding, refining interaction logic, and experimenting with simple personalization techniques to better support user workflows.
+
+## How to Run
 1. Ensure Python is installed.
-2. Install any required dependencies (add them as they are introduced).
-3. Run:
+2. Install required dependencies as they are introduced.
+3. Run the application:
+   ```bash
    python main.py
-
-## Notes
-- This project is in active development.
-- Contributions and feedback are welcome.
