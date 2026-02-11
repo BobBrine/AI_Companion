@@ -10,12 +10,15 @@ except ImportError:
 
 def main() -> None:
     model_name = "llama3.2"
-    prompt = "Write a short friendly greeting for a desktop AI companion."
 
+    messages = [
+        {"role": "user", "content": "Hi there! Can you tell me a joke?"},
+    ]
+    
     try:
         response = ollama.chat(
             model=model_name,
-            messages=[{"role": "user", "content": prompt}],
+            messages=messages,
         )
     except Exception as exc:
         print("Failed to run the model.")

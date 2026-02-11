@@ -72,3 +72,25 @@ class UI:
         # Blit to screen
         current_menu_x, current_menu_y = input_handler.get_menu_render_position()
         screen.blit(full_menu_surf, (current_menu_x, current_menu_y), src_rect)
+
+    def draw_text_input(self, screen, x, y, text, font, box_width=220, box_height=28):
+        """Draw a white text input box under the pet."""
+        padding_y = 8
+        input_x = int(x - box_width / 2)
+        input_y = int(y + self.pet_radius + padding_y)
+
+        # Keep the input within screen bounds.
+        screen_width = screen.get_width()
+        if input_x < 6:
+            input_x = 6
+        if input_x + box_width > screen_width - 6:
+            input_x = screen_width - box_width - 6
+
+        rect = pygame.Rect(input_x, input_y, box_width, box_height)
+        pygame.draw.rect(screen, (255, 255, 255), rect, border_radius=6)
+        pygame.draw.rect(screen, (200, 200, 200), rect, 1, border_radius=6)
+
+        text_surf = font.render(text, True, (0, 0, 0))
+        text_rect = text_surf.get_rect()
+        text_rect.midleft = (rect.x + 8, rect.centery)
+        screen.blit(text_surf, text_rect)

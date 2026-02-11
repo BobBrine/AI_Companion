@@ -24,6 +24,10 @@ class InputHandler:
         self.menu_anim_height = 0
         self.menu_anchor_pos = [0, 0]  # [Target X, Anchor Bottom Y]
         self.is_opening_left = False
+
+        # Text input state
+        self.text_input = ""
+        self.text_input_max_len = 60
         
     def handle_events(self, events, pet_x, pet_y, menu_width, menu_full_height, screen_width, screen_height):
         """
@@ -119,6 +123,39 @@ class InputHandler:
                 self.menu_anim_height += (menu_full_height - self.menu_anim_height) / anim_speed + 0.5
         else:
             self.menu_anim_height = 0
+
+    def handle_text_input(self, events, allow_input):
+        """
+        Handle keyboard input for the text box.
+
+        Args:
+            events: List of pygame events
+            allow_input: True when the text input is visible
+
+        Returns:
+            str or None: Submitted text when Enter is pressed, otherwise None
+        """
+        if not allow_input:
+            return None
+
+        submitted_text = None
+
+        for event in events:
+            if event.type != pygame.KEYDOWN:
+                continue
+
+            if event.key == pygame.K_RETURN:
+                if self.text_input.strip():
+                    submitted_text = self.text_input
+                self.text_input = ""
+            elif event.key == pygame.K_BACKSPACE:
+                self.text_input = self.text_input[:-1]
+            else:
+                if event.unicode and event.unicode.isprintable():
+                    if len(self.text_input) < self.text_input_max_len:
+                        self.text_input += event.unicode
+
+        return submitted_text
     
     def get_menu_render_position(self):
         """

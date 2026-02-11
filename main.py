@@ -51,9 +51,16 @@ while running:
     mouse_pos = pygame.mouse.get_pos()
     dt = clock.tick(FPS) / 1000.0
 
+    is_hovering = input_handler.is_mouse_hovering(x, y)
+    show_text_input = is_hovering or bool(input_handler.text_input)
+
     # Handle all input events
     events = pygame.event.get()
     event_result = input_handler.handle_events(events, x, y, MENU_WIDTH, MENU_FULL_HEIGHT, W, H)
+
+    submitted_text = input_handler.handle_text_input(events, show_text_input)
+    if submitted_text:
+        print(submitted_text)
     
     if event_result['quit']:
         running = False
@@ -70,11 +77,15 @@ while running:
     screen.fill(TRANSPARENT_COLOR)
 
     # Draw hover glow
-    if input_handler.is_mouse_hovering(x, y):
+    if is_hovering:
         ui.draw_hover_glow(screen, x, y)
  
     # Draw pet avatar
     pet_avatar.draw(screen, x, y)
+
+    # Draw text input
+    if show_text_input:
+        ui.draw_text_input(screen, x, y, input_handler.text_input, font)
 
     # Draw context menu
     ui.draw_menu(screen, input_handler, mouse_pos, MENU_WIDTH, MENU_FULL_HEIGHT, 
