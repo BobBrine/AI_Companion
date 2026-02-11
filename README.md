@@ -42,11 +42,35 @@ The main goal of this project is to learn about interactive system design, basic
 This project is still in active development. Future work will focus on improving contextual understanding, refining interaction logic, and experimenting with simple personalization techniques to better support user workflows.
 
 ## How to Run
-1. Ensure Python is installed.
-2. Install required dependencies as they are introduced.
-3. Run the application:
+1. Ensure Python 3.10+ is installed.
+2. Create and activate a virtual environment:
+   ```bash
+   python -m venv .venv
+   .\.venv\Scripts\activate
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Run the application:
    ```bash
    python main.py
-   
+   ```
+
+## Optional: Local Model Test
+The local model test uses Ollama and requires additional setup.
+
+1. Install Ollama from https://ollama.com
+2. Pull a model (example):
+   ```bash
+   ollama pull llama3.2
+   ```
+3. Run the test:
+   ```bash
+   python test_local_model.py
+   ```
+
 ## Notes
+- Windows only (uses Win32 APIs).
+- Make sure the images folder is present (the app loads sprite assets from images/).
 This project is a personal learning initiative and serves as a sandbox for exploring AI-driven interactive systems.

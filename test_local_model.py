@@ -9,7 +9,6 @@ except ImportError:
 
 
 def main() -> None:
-    # Simple prompt for a 16 GB RAM machine; llama3.2 is a good starting point.
     model_name = "llama3.2"
     prompt = "Write a short friendly greeting for a desktop AI companion."
 

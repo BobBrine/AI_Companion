@@ -1,0 +1,3 @@
+pygame==2.6.1
+pywin32==306
+ollama==0.4.7
