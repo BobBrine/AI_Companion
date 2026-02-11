@@ -73,24 +73,91 @@ class UI:
         current_menu_x, current_menu_y = input_handler.get_menu_render_position()
         screen.blit(full_menu_surf, (current_menu_x, current_menu_y), src_rect)
 
-    def draw_text_input(self, screen, x, y, text, font, box_width=220, box_height=28):
-        """Draw a white text input box under the pet."""
+    def draw_text_input(self, screen, x, y, text, cursor_pos, selection_start, selection_end,
+                        drag_drop_cursor_pos, font, min_width=120, max_width=500, box_height=28):
+        """Draw a white text input box under the pet with auto-adjusting width and a blinking cursor."""
         padding_y = 8
+        padding_x = 16  # Horizontal padding inside the box
+        
+        # Calculate width based on text content
+        if text:
+            text_width = font.size(text)[0] + padding_x * 2 + 10  # Extra space for cursor
+            box_width = max(min_width, min(text_width, max_width))
+        else:
+            box_width = min_width
+        
         input_x = int(x - box_width / 2)
         input_y = int(y + self.pet_radius + padding_y)
 
-        # Keep the input within screen bounds.
+        # Keep the input within screen bounds
         screen_width = screen.get_width()
         if input_x < 6:
             input_x = 6
         if input_x + box_width > screen_width - 6:
             input_x = screen_width - box_width - 6
+            # Recalculate box_width if needed to fit on screen
+            box_width = screen_width - input_x - 6
 
         rect = pygame.Rect(input_x, input_y, box_width, box_height)
+        
+        # Draw background
         pygame.draw.rect(screen, (255, 255, 255), rect, border_radius=6)
         pygame.draw.rect(screen, (200, 200, 200), rect, 1, border_radius=6)
 
+        # Draw text with scrolling if it exceeds box width
         text_surf = font.render(text, True, (0, 0, 0))
-        text_rect = text_surf.get_rect()
-        text_rect.midleft = (rect.x + 8, rect.centery)
-        screen.blit(text_surf, text_rect)
+        text_width_actual = text_surf.get_width()
+        
+        # Calculate scroll offset to keep cursor visible
+        cursor_text = text[:cursor_pos]
+        cursor_offset = font.size(cursor_text)[0]
+        
+        scroll_x = 0
+        available_width = box_width - padding_x * 2
+        
+        if cursor_offset > available_width:
+            scroll_x = cursor_offset - available_width + 20
+        
+        # Set clip area and draw selection highlight
+        clip_rect = pygame.Rect(rect.x + 8, rect.y, rect.width - 16, rect.height)
+        screen.set_clip(clip_rect)
+
+        if selection_start != selection_end:
+            sel_start = min(selection_start, selection_end)
+            sel_end = max(selection_start, selection_end)
+            prefix_width = font.size(text[:sel_start])[0]
+            selection_width = font.size(text[sel_start:sel_end])[0]
+            highlight_rect = pygame.Rect(
+                rect.x + padding_x - scroll_x + prefix_width,
+                rect.centery - text_surf.get_height() // 2,
+                selection_width,
+                text_surf.get_height()
+            )
+            pygame.draw.rect(screen, (173, 216, 230), highlight_rect)
+
+        # Draw text
+        screen.blit(text_surf, (rect.x + padding_x - scroll_x, rect.centery - text_surf.get_height() // 2))
+        
+        # Draw blinking cursor
+        if pygame.time.get_ticks() % 1000 < 500:  # Blink every 500ms
+            cursor_x = rect.x + padding_x + cursor_offset - scroll_x
+            cursor_y_top = rect.centery - 8
+            cursor_y_bottom = rect.centery + 8
+            pygame.draw.line(screen, (0, 0, 0), (cursor_x, cursor_y_top), (cursor_x, cursor_y_bottom), 2)
+
+        if drag_drop_cursor_pos != -1:
+            drop_x = rect.x + padding_x + font.size(text[:drag_drop_cursor_pos])[0] - scroll_x
+            pygame.draw.line(screen, (100, 100, 255),
+                             (drop_x, rect.centery - 12),
+                             (drop_x, rect.centery + 12), 4)
+        
+        screen.set_clip(None)  # Reset clipping
+
+        render_info = {
+            "text_x_start": rect.x + padding_x - scroll_x,
+            "scroll_x": scroll_x,
+            "padding_x": padding_x,
+            "font": font
+        }
+
+        return rect, render_info
