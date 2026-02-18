@@ -5,7 +5,7 @@ import win32api
 from pet_avatar import PetAvatar
 from ui import UI
 from input_handler import InputHandler
-
+import ai_core
 # -------------------------
 # Config
 # -------------------------
@@ -105,9 +105,12 @@ while running:
     event_result = input_handler.handle_events(events, x, y, MENU_WIDTH, MENU_FULL_HEIGHT, W, H, hwnd)
 
     submitted_text = input_handler.handle_text_input(events, show_text_input)
-    if submitted_text:
-        print(submitted_text)
-    
+    if submitted_text:   # only call the AI when there's actual input
+        history = [{"role": "user", "content": submitted_text}]
+        reply = ai_core.get_model_response(history)
+        print("You:", submitted_text)
+        print("Assistant:", reply)
+        
     if event_result['quit']:
         running = False
     
