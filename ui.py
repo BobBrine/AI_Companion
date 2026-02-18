@@ -74,10 +74,10 @@ class UI:
         screen.blit(full_menu_surf, (current_menu_x, current_menu_y), src_rect)
 
     def draw_text_input(self, screen, x, y, text, cursor_pos, selection_start, selection_end,
-                        drag_drop_cursor_pos, font, min_width=120, max_width=500, box_height=28):
+                        drag_drop_cursor_pos, font, min_width=100, max_width=500, box_height=28):
         """Draw a white text input box under the pet with auto-adjusting width and a blinking cursor."""
         padding_y = 8
-        padding_x = 16  # Horizontal padding inside the box
+        padding_x = 8  # Horizontal padding inside the box
         
         # Calculate width based on text content
         if text:
