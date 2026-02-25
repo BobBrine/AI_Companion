@@ -6,11 +6,21 @@ This project is an experimental AI companion designed to explore how autonomous 
 The main goal of this project is to learn about interactive system design, basic AI decision-making, and real-time visual interaction, inspired by the concept of a J.A.R.V.I.S.-style desktop assistant.
 
 ## Current Progress
-- Basic avatar rendering and movement behavior
-- Initial UI layout and helper components
-- Input handling structure for future interaction
-- Early experimentation with local AI models
-- Initial sprite and visual asset setup
+- Draggable desktop avatar with always-on-top transparent window
+- Smooth eye tracking that follows the cursor
+- Right-click context menu (Settings / Close Pet)
+- Local AI chat integration through Ollama (background-threaded requests)
+- Interactive chat UI with typing indicator and timed response bubble
+- Rich text input editing (selection, copy/paste, cut, undo/redo, word/all select)
+- Drag-and-drop support for files and text into the input field
+- Selectable response text with Ctrl+C copy from the output bubble
+
+## What's New
+- **Asynchronous AI replies:** model calls run in a worker thread so the UI stays responsive.
+- **Typing feedback UI:** animated typing indicator appears while waiting for model output.
+- **Advanced text input editing:** supports Ctrl+A/C/X/V, undo/redo, cursor navigation, and selection.
+- **Selectable output text:** you can highlight assistant replies and copy them to clipboard.
+- **Improved avatar behavior:** eye tracking smoothness and two-eye mode are integrated.
 
 ## Planned Features
 - User-selected screen regions and bounding box controls
@@ -25,10 +35,10 @@ The main goal of this project is to learn about interactive system design, basic
 
 ## Project Structure
 - `main.py` — Application entry point and main loop
+- `ai_core.py` — Ollama model communication helpers
 - `pet_avatar.py` — Avatar rendering and behavior logic
 - `input_handler.py` — Input and event handling
 - `ui.py` — UI components and layout helpers
-- `test_local_model.py` — Local model experimentation
 - `images/` — Sprite and visual assets
 
 ## What I Learned
@@ -57,17 +67,17 @@ This project is still in active development. Future work will focus on improving
    python main.py
    ```
 
-## Optional: Local Model Test
-The local model test uses Ollama and requires additional setup.
+## Optional: Local Model Setup
+The app uses Ollama for local model responses and requires additional setup.
 
 1. Install Ollama from https://ollama.com
 2. Pull a model (example):
    ```bash
    ollama pull llama3.2
    ```
-3. Run the test:
+3. Run the app after model setup:
    ```bash
-   python test_local_model.py
+   python main.py
    ```
 
 ## Notes
